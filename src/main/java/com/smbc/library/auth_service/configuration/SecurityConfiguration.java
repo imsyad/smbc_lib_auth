@@ -19,21 +19,22 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-    private final JwtFilter jwtFilter;
-    private final ForbiddenEntryPoint forbiddenEntryPoint;
-    private final UnauthorizedEntryPoint unauthorizedEntryPoint;
+	private final JwtFilter jwtFilter;
+	private final ForbiddenEntryPoint forbiddenEntryPoint;
+	private final UnauthorizedEntryPoint unauthorizedEntryPoint;
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(
-                        auth -> auth.requestMatchers("/auth/**").permitAll().anyRequest().authenticated())
-                .exceptionHandling(e -> e.authenticationEntryPoint(unauthorizedEntryPoint)
-                        .accessDeniedHandler(forbiddenEntryPoint))
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-
-        return httpSecurity.build();
-    }
-
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+		httpSecurity
+				.csrf(csrf -> csrf.disable())
+				.sessionManagement(session -> session
+						.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.authorizeHttpRequests(
+						auth -> auth.requestMatchers("/auth/**").permitAll().anyRequest()
+								.authenticated())
+				.exceptionHandling(e -> e.authenticationEntryPoint(unauthorizedEntryPoint)
+						.accessDeniedHandler(forbiddenEntryPoint))
+				.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+		return httpSecurity.build();
+	}
 }

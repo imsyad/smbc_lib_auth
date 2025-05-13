@@ -14,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
@@ -31,5 +30,5 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseDto<?> login(@RequestBody @Valid UserLoginDto userLogin) {
         return userService.login(userLogin);
-    }   
+    }
 }

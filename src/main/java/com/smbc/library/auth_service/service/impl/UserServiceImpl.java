@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
                 throw new InternalServerErrorException("Failed to register member data");
             }
 
-            return ResponseUtil.success(HttpStatus.OK.value(), "Success to register a new user", null);
+            return ResponseUtil.success(HttpStatus.CREATED.value(), "Success to register a new user", null);
         } catch (Exception e) {
             log.error("Failed to register user", e);
             throw e;
